@@ -1,5 +1,5 @@
 {
-  description = "A very basic flake";
+  description = "Pentesting Setup";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
@@ -8,7 +8,6 @@
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.unstable-pkgs.follows = "nixpkgs";
     };
   };
 
@@ -31,8 +30,9 @@
     nixosConfigurations.default= nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs;};
       modules = [
-        ./nixos/configuration.nix
+        ./hosts/default/configuration.nix
         inputs.home-manager.nixosModules.default
+        ./modules
       ];
     };
   };
