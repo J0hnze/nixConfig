@@ -6,7 +6,7 @@
     unstable-pkgs.url  = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -20,15 +20,15 @@
         allowUnfree = true;
       };
     };
-      unstable-pkgs = import <nixos-unstable> { 
-      config = { 
-        allowUnfree = true; 
-        }; 
-    };
+      # unstable-pkgs = import nixos-unstable { 
+      # config = { 
+      # allowUnfree = true; 
+      # }; 
+    #};
   in
   {
-    nixosConfigurations.default= nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs;};
+    nixosConfigurations.voidsent= nixpkgs.lib.nixosSystem {
+      # specialArgs = {inherit inputs;};
       modules = [
         ./hosts/default/configuration.nix
         inputs.home-manager.nixosModules.default
