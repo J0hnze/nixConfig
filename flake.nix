@@ -10,10 +10,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    pxe-server = {
-      url = "git+file:///home/leigh-admin/Projects/pxe-server";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # pxe-server = {
+    #   url = "git+file:///home/leigh-admin/Projects/pxe-server";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    #};
     headplane = {
       url = "github:tale/headplane/main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,7 +24,7 @@
     self, 
     nixpkgs, 
     nixpkgs-unstable, 
-    pxe-server,
+    #pxe-server,
     headplane,
     ... 
     }@inputs: 

@@ -12,5 +12,9 @@ environment.systemPackages = with pkgs-unstable; [
   platformio
   postman
   netexec
+  subfinder
+  jsubfinder
+  massdns
+  shuffledns
   ];
 }
