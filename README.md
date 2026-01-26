@@ -1,6 +1,6 @@
 ## NixOS Config
 
-This is my attempt at creating a replicatable build for testing that has _hopefully_ everything you need to go from live CD to up and running in less than an hour :)
+This is my attempt at creating a replicatable build for testing that has _hopefully_ everything you need to go from live CD to up and running in less than an hour - current testing is _around 25 mins :)
 
 ## Applying The Config
 

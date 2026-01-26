@@ -17,7 +17,6 @@
     nuclei
     platformio
     postman
-    python313
     shuffledns
     subfinder
     vscode
