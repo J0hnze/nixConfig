@@ -48,6 +48,7 @@
     go
     gowitness
     # H
+    hoppscotch
     hyprland
     # I
     imhex
@@ -90,7 +91,7 @@
     sameboy
     scrcpy
     spice-vdagent
-    sublist3r
+    
     # T
     terraform
     tmux
