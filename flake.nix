@@ -36,7 +36,7 @@
       ...
     }@inputs:
     let
-      system = "aarch64-linux";
+      system = "aarch64-darwin";
       pkgs = import nixpkgs {
         inherit system;
         config = {

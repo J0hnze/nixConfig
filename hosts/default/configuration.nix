@@ -15,7 +15,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    
+
     # inputs.home-manager.nixosModules.default
   ];
 
@@ -157,6 +157,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   ];
+  nixpkgs.config.allowUnsupportedSystem = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
