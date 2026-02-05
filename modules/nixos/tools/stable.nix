@@ -8,8 +8,8 @@
 {
   environment.systemPackages = with pkgs; [
     # A
-    altair
-    android-tools
+    #altair
+    #android-tools --doesnt work with aarch64-linux
     apktool
     apksigner
 

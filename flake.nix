@@ -59,6 +59,7 @@
           modules = [
             ((import ./hosts/default/configuration.nix) { inherit pkgs-unstable; })
             ((import ./modules) { inherit pkgs-unstable; })
+
             #inputs.home-manager.nixosModules.default
             #inputs.vscode-server.nixosModules.default
           ];
