@@ -53,7 +53,7 @@
     in
     {
       nixosConfigurations = {
-        melchior = nixpkgs.lib.nixosSystem {
+        ramiel = nixpkgs.lib.nixosSystem {
           # # Pentesting
           inherit system pkgs;
           modules = [
