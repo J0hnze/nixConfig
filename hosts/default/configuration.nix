@@ -43,7 +43,11 @@
   ];
 
   networking = {
+<<<<<<< HEAD
     hostName = "melchior"; # Define your hostname.
+=======
+    hostName = "ramiel"; # Define your hostname.
+>>>>>>> 2813a72 (add m1 config)
     # wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
     # Configure network proxy if necessary
@@ -138,7 +142,7 @@
       # libinput.enable = true;
       xkb = {
         layout = "us";
-        variant = "";
+        variant = "mac";
       };
 
     };
@@ -172,6 +176,16 @@
 
   # List services that you want to enable:
 
+<<<<<<< HEAD
+=======
+  #home-manager = {
+  #  # specialArgs = {inherit inputs;};
+  #  users = {
+  #    "phyu" = import ./home.nix;
+  #  };
+  #};
+
+>>>>>>> 2813a72 (add m1 config)
   # Enable VMware Tools
 
   virtualisation = {
