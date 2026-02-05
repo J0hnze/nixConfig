@@ -8,17 +8,17 @@
 {
   environment.systemPackages = with pkgs; [
     # A
-    #altair
-    #android-tools --doesnt work with aarch64-linux
-    apktool
-    apksigner
-
+    # altair
+    # android-tools --doesnt work with aarch64-darwin
+    # apktool
+    # apksigner
     awscli
     # B
     bat
-    bloodhound
+    # bloodhound
     bluez
     bluez-tools
+    brave
     # C
     chromedriver
     chromium
@@ -40,7 +40,6 @@
     ffuf
     flameshot
     fastfetch
-
     # G
     gcc
     gdb
@@ -103,13 +102,14 @@
     # W
     wget
     wifite2
-    winetricks
-    wineWowPackages.stable
+    # winetricks
+    # wineWowPackages.stable
     # U
     uv
     # Z
     zsh
 
+  
     # python
     python312
     python312Packages.pipx

@@ -19,23 +19,40 @@
     # inputs.home-manager.nixosModules.default
   ];
 
-  tester = {
-    enable = true;
-    userName = "johnze";
-  };
-
-  # Bootloader.
-  boot = {
-    loader = {
-      grub.enable = true;
-      grub.device = "/dev/sda";
-      grub.useOSProber = true;
-    };
-    blacklistedKernelModules = [ "rtl8xxxu" ];
-    extraModulePackages = with config.boot.kernelPackages; [
-      rtl88xxau-aircrack
+  users.users.johnze = {
+    isNormalUser = true;
+    description = "johnze";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+      kdePackages.kate
+      openssh
+      net-tools
+    #  thunderbird
     ];
   };
+
+  # tester = {
+  #   enable = true;
+  #   userName = "johnze";
+  # };
+
+  # Bootloader.
+
+  # boot = {
+  #   loader = {
+  #     grub.enable = true;
+  #     grub.device = "/dev/sda";
+  #     grub.useOSProber = true;
+  #   };
+  #   blacklistedKernelModules = [ "rtl8xxxu" ];
+  #   extraModulePackages = with config.boot.kernelPackages; [
+  #     rtl88xxau-aircrack
+  #   ];
+  # };
+
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -139,7 +156,6 @@
         layout = "us";
         variant = "mac";
       };
-
     };
 
     qemuGuest.enable = true;
@@ -157,7 +173,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   ];
-  nixpkgs.config.allowUnsupportedSystem = true;
+  # nixpkgs.config.allowUnsupportedSystem = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
