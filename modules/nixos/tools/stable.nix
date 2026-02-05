@@ -8,16 +8,10 @@
 {
   environment.systemPackages = with pkgs; [
     # A
-    altair
-<<<<<<< HEAD
-    android-tools
-    apktool
-    apksigner
-=======
     # android-tools -- doesnt work on aarch64
     # apktool
     # apksigner
->>>>>>> 2813a72 (add m1 config)
+    # altair
     awscli
     # B
     bat
