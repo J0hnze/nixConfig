@@ -22,7 +22,7 @@ Edit the `flake.nix` and change `nixosConfigurations.voidsent` to the name of th
 Once that's done, run the following to apply the configuration to the device where `<hostname>` is the name that you added to the flake.nix
 
 ```bash
-sudo nixos-rebuild switch --flake .#<hostname>
+sudo nixos-rebuild switch --flake .#$hostname 
 ```
 
 This will take the configuration from the current folder and apply it to the machine (if it's the first time running it, it will take a little time)
