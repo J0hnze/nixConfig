@@ -2,29 +2,50 @@
 
 let
   cfg = config.my.nessus;
-
   version = "10.11.2";
 
-src =
-  if pkgs.stdenv.hostPlatform.system == "aarch64-linux" then
-    ../../../pkgs/nessus/Nessus-${version}-ubuntu1804_aarch64.deb
-  else
-    ../../../pkgs/nessus/Nessus-${version}-ubuntu1604_amd64.deb;
+  # Select correct installer based on architecture
+  src =
+    if pkgs.stdenv.hostPlatform.system == "aarch64-linux" then
+      ../../../pkgs/nessus/Nessus-${version}-ubuntu1804_aarch64.deb
+    else
+      ../../../pkgs/nessus/Nessus-${version}-ubuntu1604_amd64.deb;
 
+  # Extract .deb into Nix store
   nessusPkg = pkgs.stdenv.mkDerivation {
     name = "nessus-${version}";
     inherit src;
 
     nativeBuildInputs = [ pkgs.dpkg ];
 
+    dontConfigure = true;
+    dontBuild = true;
+
     unpackPhase = ''
-      dpkg-deb -x $src $PWD/extracted
+      mkdir extracted
+      ${pkgs.dpkg}/bin/dpkg-deb -x $src extracted
     '';
 
     installPhase = ''
       mkdir -p $out
       cp -r extracted/* $out/
     '';
+  };
+
+  # FHS wrapper so proprietary binary runs on NixOS
+  nessusFHS = pkgs.buildFHSUserEnv {
+    name = "nessus-env";
+
+    targetPkgs = pkgs: with pkgs; [
+      glibc
+      zlib
+      openssl
+      libgcc
+      curl
+      bash
+    ];
+
+    runScript = "${nessusPkg}/opt/nessus/sbin/nessusd";
   };
 
 in
@@ -43,7 +64,7 @@ in
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${nessusPkg}/opt/nessus/sbin/nessusd";
+        ExecStart = "${nessusFHS}/bin/nessus-env";
         Restart = "on-failure";
       };
     };
