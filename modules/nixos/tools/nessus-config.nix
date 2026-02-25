@@ -33,7 +33,7 @@ let
   };
 
   # FHS wrapper so proprietary binary runs on NixOS
-  nessusFHS = pkgs.buildFHSEnv {
+    nessusFHS = pkgs.buildFHSEnv {
     name = "nessus-env";
 
     targetPkgs = pkgs: with pkgs; [
@@ -45,7 +45,14 @@ let
       bash
     ];
 
-    runScript = "${nessusPkg}/opt/nessus/sbin/nessusd";
+    extraMounts = [
+      {
+        source = "${nessusPkg}/opt/nessus";
+        target = "/opt/nessus";
+      }
+    ];
+
+    runScript = "/opt/nessus/sbin/nessusd";
   };
 
 in
@@ -57,16 +64,25 @@ in
 
     networking.firewall.allowedTCPPorts = [ 8834 ];
 
-    systemd.services.nessus = {
-      description = "Nessus vulnerability scanner";
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
+  systemd.services.nessus = {
+    description = "Nessus vulnerability scanner";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
 
-      serviceConfig = {
-        Type = "simple";
-        ExecStart = "${nessusFHS}/bin/nessus-env";
-        Restart = "on-failure";
-      };
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${nessusFHS}/bin/nessus-env";
+      Restart = "on-failure";
+
+      Environment = [
+        "OPENSSL_CONF="
+        "OPENSSL_MODULES="
+        "NESSUS_FIPS=0"
+        "NESSUS_TZ_DIR=/usr/share/zoneinfo"
+      ];
     };
+  };
+
+
   };
 }
