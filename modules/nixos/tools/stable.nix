@@ -12,13 +12,13 @@
     android-tools
     apktool
     apksigner
-
     awscli
     # B
     bat
     bloodhound
     bluez
     bluez-tools
+    btop
     # C
     chromedriver
     chromium
@@ -33,14 +33,16 @@
     dirbuster
     direnv
     dive
+    dnsutils
     docker
     # E
     enum4linux-ng
+    exploitdb
     # F
     ffuf
+    findomain
     flameshot
     fastfetch
-
     # G
     gcc
     gdb
@@ -48,6 +50,7 @@
     go
     gowitness
     # H
+    hoppscotch
     hyprland
     # I
     imhex
@@ -81,6 +84,7 @@
     openssl
     opentofu
     # P
+    parted
     postman
     # R
     ruby
@@ -90,7 +94,7 @@
     sameboy
     scrcpy
     spice-vdagent
-    sublist3r
+    
     # T
     terraform
     tmux
@@ -102,6 +106,7 @@
     vscode-extensions.ms-dotnettools.vscode-dotnet-runtime
     # W
     wget
+    whois
     wifite2
     winetricks
     wineWowPackages.stable
@@ -111,6 +116,7 @@
     zsh
 
     # python
+    (python312.withPackages (ps: [ps.requests]))
     python312
     python312Packages.pipx
     python312Packages.pandas
@@ -118,6 +124,5 @@
     python312Packages.numpy
     python312Packages.requests
     python312Packages.wcwidth
-
   ];
 }
