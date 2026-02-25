@@ -21,6 +21,11 @@ Edit the `flake.nix` and change `nixosConfigurations.voidsent` to the name of th
 
 Once that's done, run the following to apply the configuration to the device where `<hostname>` is the name that you added to the flake.nix
 
+## Nessus 
+
+to install nessus sun the fetch nessus script first to get the files `scripts/fetch-nessus.sh`. they arent stored in the repo as they are too big
+
+
 ```bash
 sudo nixos-rebuild switch --flake .#$hostname 
 ```
