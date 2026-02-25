@@ -33,7 +33,7 @@ let
   };
 
   # FHS wrapper so proprietary binary runs on NixOS
-  nessusFHS = pkgs.buildFHSUserEnv {
+  nessusFHS = pkgs.buildFHSEnv {
     name = "nessus-env";
 
     targetPkgs = pkgs: with pkgs; [
