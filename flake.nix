@@ -33,7 +33,7 @@
     in
     {
       nixosConfigurations = {
-        melchior = nixpkgs.lib.nixosSystem {
+        shinji = nixpkgs.lib.nixosSystem {
           inherit system pkgs;
 
           modules = [

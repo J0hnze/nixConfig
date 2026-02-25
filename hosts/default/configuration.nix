@@ -42,7 +42,7 @@
   ];
 
   networking = {
-    hostName = "melchior"; # Define your hostname. Change this to what ever you want
+    hostName = "shinji"; # Define your hostname. Change this to what ever you want
 
     # wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 

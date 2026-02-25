@@ -1,41 +1,40 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
+  # ------------------------------------------------------------
   # Enable Docker
-  virtualisation.docker.enable = true;
+  # ------------------------------------------------------------
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+  };
 
-  # Allow your user to run docker without sudo
+  # Optional: allow your user to run docker without sudo
   users.users.johnze.extraGroups = [ "docker" ];
 
-  # Create persistent storage directory for Nessus
-  systemd.tmpfiles.rules = [
-    "d /home/johnze/Services/Nessus 0755 johnze users - -"
-  ];
-
-  # Open Nessus port
-  networking.firewall.allowedTCPPorts = [ 8834 ];
-
-  # Run Nessus container declaratively
+  # ------------------------------------------------------------
+  # Nessus Container
+  # ------------------------------------------------------------
   virtualisation.oci-containers = {
     backend = "docker";
 
-    containers = {
-      nessus = {
-        image = "tenable/nessus:latest-ubuntu";
-        autoStart = true;
+    containers.nessus = {
+      image = "tenable/nessus:latest-ubuntu";
 
-        ports = [
-          "8834:8834"
-        ];
+      # Map host port 8834 → container 8834
+      ports = [
+        "8834:8834"
+      ];
 
-        volumes = [
-          "/home/johnze/data/nessus:/opt/nessus" 
-        ];
+      # IMPORTANT:
+      # Persist ONLY the Nessus data directory.
+      # Do NOT mount over /opt/nessus entirely.
+      volumes = [
+        "nessus_data:/opt/nessus/var/nessus"
+      ];
 
-        environment = {
-          ACCEPT_EULA = "yes";
-        };
-      };
+      # Auto start via systemd
+      autoStart = true;
     };
   };
-}
+} 
