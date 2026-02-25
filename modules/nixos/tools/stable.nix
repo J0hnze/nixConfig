@@ -12,7 +12,6 @@
     android-tools
     apktool
     apksigner
-
     awscli
     # B
     bat
@@ -33,14 +32,16 @@
     dirbuster
     direnv
     dive
+    dnsutils
     docker
     # E
     enum4linux-ng
+    exploitdb
     # F
     ffuf
+    findomain
     flameshot
     fastfetch
-
     # G
     gcc
     gdb
@@ -103,6 +104,7 @@
     vscode-extensions.ms-dotnettools.vscode-dotnet-runtime
     # W
     wget
+    whois
     wifite2
     winetricks
     wineWowPackages.stable
@@ -112,6 +114,7 @@
     zsh
 
     # python
+    (python312.withPackages (ps: [ps.requests]))
     python312
     python312Packages.pipx
     python312Packages.pandas
@@ -119,6 +122,5 @@
     python312Packages.numpy
     python312Packages.requests
     python312Packages.wcwidth
-
   ];
 }
