@@ -15,6 +15,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    
     # inputs.home-manager.nixosModules.default
   ];
 
@@ -42,10 +43,7 @@
   ];
 
   networking = {
-    hostName = "voidsent"; # Define your hostname. Change this to what ever you want
-
-
-
+    hostName = "melchior"; # Define your hostname.
     # wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
     # Configure network proxy if necessary
@@ -133,6 +131,7 @@
       # Enable the X11 windowing system.
       # You can disable this if you're only using the Wayland session.
       enable = true;
+      videoDrivers = ["vmware"];
       # Enable touchpad support (enabled default in most desktopManager).
       displayManager.lightdm.enable = true;
       desktopManager.cinnamon.enable = true;
@@ -148,12 +147,13 @@
     spice-vdagentd.enable = true;
   };
 
-  # Install firefox.
   programs = {
     firefox.enable = true;
     zsh.enable = true;
     nix-ld.enable = true;
   };
+    
+    my.nessus.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

@@ -33,8 +33,7 @@
     in
     {
       nixosConfigurations = {
-        voidsent = nixpkgs.lib.nixosSystem { ## left side of the equals here is config name
-          # # Pentesting
+        shinji = nixpkgs.lib.nixosSystem {
           inherit system pkgs;
 
           modules = [
