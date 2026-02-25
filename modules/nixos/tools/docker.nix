@@ -29,8 +29,7 @@
         ];
 
         volumes = [
-          "nessus_data:/opt/nessus" 
-          #"/home/johnze/Services/Nessus:/opt/nessus/var/nessus"
+          "/home/johnze/data/nessus:/opt/nessus" 
         ];
 
         environment = {
