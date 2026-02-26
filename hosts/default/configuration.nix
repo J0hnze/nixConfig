@@ -130,8 +130,8 @@
       # Enable the X11 windowing system.
       # You can disable this if you're only using the Wayland session.
       enable = true;
-      # videoDrivers = ["vmware"];
-      videoDrivers = ["fbdev"];
+      # videoDrivers = ["vmware"]; # is not compatible with m1
+      videoDrivers = ["fbdev"]; 
       # Enable touchpad support (enabled default in most desktopManager).
       displayManager.lightdm.enable = true;
       desktopManager.cinnamon.enable = true;
