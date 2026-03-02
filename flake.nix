@@ -14,9 +14,10 @@
   outputs =
     { self, nixpkgs, nixpkgs-unstable, headplane, ... }@inputs:
     let
-      system = "x86_64-linux";
-
-      # Primary pkgs (stable)
+      system = "aarch64-linux";
+      # system = "x86_64-linux";
+      # system = "aarch64-darwin" ## APPLE SILICON
+      # system = "x86_64-darwin"  ## APPLE INTEL
       pkgs = import nixpkgs {
         inherit system;
         config = {
@@ -33,7 +34,7 @@
     in
     {
       nixosConfigurations = {
-        melchior = nixpkgs.lib.nixosSystem {
+        shinji = nixpkgs.lib.nixosSystem {
           inherit system pkgs;
 
           modules = [

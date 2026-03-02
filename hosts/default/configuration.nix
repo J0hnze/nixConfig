@@ -43,7 +43,7 @@
   ];
 
   networking = {
-    hostName = "melchior"; 
+    hostName = "shinji"; # Define your hostname.
     # wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
     # Configure network proxy if necessary
@@ -131,14 +131,15 @@
       # Enable the X11 windowing system.
       # You can disable this if you're only using the Wayland session.
       enable = true;
-      videoDrivers = ["vmware"];
+      # videoDrivers = ["vmware"]; # is not compatible with m1
+      videoDrivers = ["fbdev"]; 
       # Enable touchpad support (enabled default in most desktopManager).
       displayManager.lightdm.enable = true;
       desktopManager.cinnamon.enable = true;
       # libinput.enable = true;
       xkb = {
         layout = "us";
-        variant = "";
+        variant = "mac";
       };
 
     };
@@ -153,8 +154,6 @@
     nix-ld.enable = true;
   };
     
-    my.nessus.enable = true;
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
