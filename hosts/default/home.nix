@@ -3,6 +3,11 @@
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
+
+  imports = [
+    ./custom.nix
+  ]
+
   home.username = "johnze";
   home.homeDirectory = "/home/johnze";
 
