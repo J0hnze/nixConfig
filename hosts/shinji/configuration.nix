@@ -1,23 +1,25 @@
 { config, pkgs, custom, ... }:
 
 {
+  imports = [
+    ./hardware-configuration.nix
+  ];
+
   networking.hostName = "shinji";
 
-  # Keyboard layout (console)
+  # Correct for EFI / Apple Silicon
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   console.keyMap = "uk";
 
-  # X11 / Wayland keyboard layout
-  services.xserver = {
-    xkb.layout = "gb";
-    xkb.variant = "";
+  services.xserver.xkb = {
+    layout = "gb";
+    variant = "mac";
   };
 
   users.users.${custom.username} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "docker" ];
   };
-
-  imports = [
-    ./hardware-configuration.nix
-  ];
 }

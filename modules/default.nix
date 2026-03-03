@@ -1,4 +1,4 @@
-{ pkgs-unstable }:
+{ pkgs-unstable, ... }:
 {
   imports = [
     ./nixos/tester.nix

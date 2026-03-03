@@ -33,9 +33,10 @@
         modules = [
           ./hosts/${hostName}/configuration.nix
           ./hosts/${hostName}/hardware-configuration.nix
-          ./hosts/${hostName}/home.nix
+          #./hosts/${hostName}/custom.nix
           ./hosts/common/base.nix
-          ./modules
+          ./modules/nixos/desktop.nix  
+	  ./modules
         ];
       };
 

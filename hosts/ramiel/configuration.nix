@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
+    ./hosts/default/hardware-configuration.nix
   ];
 
   networking.hostName = "ramiel";
