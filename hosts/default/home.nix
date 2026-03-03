@@ -1,15 +1,15 @@
-{ config, pkgs, ... }:
+{ config, pkgs, custom ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
 
   imports = [
-    ./custom.nix
+  
   ]
 
-  home.username = "johnze";
-  home.homeDirectory = "/home/johnze";
+  home.username = custom.username;
+  home.homeDirectory = "/home/${custom.username}";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

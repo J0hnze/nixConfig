@@ -4,41 +4,57 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    headplane = {
-      url = "github:tale/headplane/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs =
-    { self, nixpkgs, nixpkgs-unstable, headplane, ... }@inputs:
-    let
-      system = "aarch64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config = {
-          allowUnfree = true;
+  outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs:
+  let
+    mkHost = hostName:
+      let
+        custom = import ./hosts/${hostName}/custom.nix;
+        system = custom.system;
+
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
         };
-      };
 
-      # Unstable pkgs
-      pkgs-unstable = import nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
-
-    in
-    {
-      nixosConfigurations = {
-        ramiel = nixpkgs.lib.nixosSystem {
-          inherit system pkgs;
-
-          modules = [
-            ((import ./hosts/default/configuration.nix) { inherit pkgs-unstable; })
-            ((import ./modules) { inherit pkgs-unstable; })
-          ];
+        pkgs-unstable = import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
         };
+      in
+      nixpkgs.lib.nixosSystem {
+        inherit system pkgs;
+
+        specialArgs = {
+          inherit custom pkgs-unstable;
+        };
+
+        modules = [
+          ./hosts/${hostName}/configuration.nix
+          ./hosts/${hostName}/hardware-configuration.nix
+          ./hosts/${hostName}/home.nix
+          ./hosts/common/base.nix
+          ./modules
+        ];
       };
-    };
+
+    hostDirs =
+      builtins.filter
+        (name:
+          builtins.pathExists ./hosts/${name}/custom.nix
+        )
+        (builtins.attrNames (builtins.readDir ./hosts));
+
+  in
+  {
+    nixosConfigurations =
+      builtins.listToAttrs
+        (map
+          (host: {
+            name = host;
+            value = mkHost host;
+          })
+          hostDirs);
+  };
 }
