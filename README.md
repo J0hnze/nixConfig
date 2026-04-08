@@ -1,53 +1,127 @@
-## NixOS Config
+##  NixOS Config
 
-This is my attempt at creating a replicatable build for testing that has _hopefully_ everything you need to go from live CD to up and running in less than an hour - current testing is _around_ 25 mins :)
+This repository provides a fully reproducible NixOS setup designed to get you from a fresh install to a fully working pentesting environment in under an hour.
 
+Current test builds average ~25 minutes from live CD to fully configured system.
+
+The configuration is structured for:
+
+- Multiple team members
+- Different hardware
+- Different usernames
+- Different hostnames
+- Zero config conflicts
 
 ## Getting Started From Fresh Install
-Open the base configuration
-```bash
+
+### 1. Install Git
+
+Open the base system configuration:
+
 sudo nano /etc/nixos/configuration.nix
-```
 
-Add the following packages into the `environment.systemPackages = with pkgs; []` config section
+Add the following inside:
 
-- git
-- vscode
+environment.systemPackages = with pkgs; [
+  git
+];
 
-Once these are added run `sudo nixos-rebuild switch` to install git and vscode!
-Next - clone the repo and CD into the nixConig directory
+Then run:
 
-Then follow the steps below to apply the config
+sudo nixos-rebuild switch
+### 2. Clone The Repo
+git clone <repo-url>
+cd nixConfig
 
+### 3. Generate Your Host
 
-## Applying The Config
+Run the host generator:
 
+./scripts/new-host.sh
 
-cd into the root of the repo directory and run the `copy-hw-config.sh` script or following command:
+This will:
 
-```bash
-sudo cat /etc/nixos/hardware-configuration.nix > ./hosts/default/hardware-configuration.nix
-```
+Ask for hostname
 
-This will overwrite the existing hardware configuration (nix needs the file to be tracked by git so ... this is what you do)
+Ask for username
 
-Make the relevant changes in the `modules/nixos/tester.nix` for your user on lines 15 and 25 
+Detect your architecture
 
-Edit the lines 23,45 and 101 in your `configuration.nix` ( in the current folder ) to reflect your hostname 
+Create hosts/<hostname>/
 
-Edit the `flake.nix` and change `voidsent = nixpkgs.lib.nixosSystem` to the name of the config (in this case we're using  hostname) `<hostname> = nixpkgs.lib.nixosSystem` (line 58)
+Generate:
 
-Once that's done, run the following to apply the configuration to the device where `<hostname>` is the name that you added to the flake.nix
+custom.nix
 
-## Nessus 
+configuration.nix
 
-if the docker file doesnt pull use the following command
-'sudo docker pull tenable/nessus:latest-ubuntu'
+home.nix
 
+Optional: it can also set the system hostname for you.
 
-```bash
-sudo nixos-rebuild switch --flake .#$hostname 
-```
+### 4. Copy Hardware Configuration
 
-This will take the configuration from the current folder and apply it to the machine (if it's the first time running it, it will take a little time)
+After generating the host, copy your hardware config:
 
+sudo cp /etc/nixos/hardware-configuration.nix ./hosts/<hostname>/
+
+Replace <hostname> with your actual hostname.
+
+###  5.Build The System
+
+Run:
+
+sudo nixos-rebuild switch --flake .#$(hostname)
+
+Or manually:
+
+sudo nixos-rebuild switch --flake .#<hostname>
+
+The flake automatically detects all hosts inside hosts/.
+
+No manual edits to flake.nix are required.
+
+📂 Repository Structure
+hosts/
+ ├── <hostname>/
+ │    ├── custom.nix
+ │    ├── configuration.nix
+ │    ├── hardware-configuration.nix
+ │    └── home.nix
+ └── common/
+      └── base.nix
+
+modules/
+scripts/
+flake.nix
+
+Each team member has their own isolated host folder.
+
+No conflicts.
+No shared usernames.
+No hardcoded values.
+
+🔄 Rebuilding After Changes
+
+Any time you update the repo:
+
+sudo nixos-rebuild switch --flake .#$(hostname)
+🧰 Tooling Setup
+Nessus (Docker)
+
+If the docker image fails to pull automatically:
+
+sudo docker pull tenable/nessus:latest-ubuntu
+🧠 Team Usage Model
+
+Each team member:
+
+Clones the repo
+
+Runs ./scripts/new-host.sh
+
+Copies hardware config
+
+Builds using their hostname
+
+The flake automatically builds only their configuration.
