@@ -4,44 +4,49 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    headplane = {
-      url = "github:tale/headplane/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs =
-    { self, nixpkgs, nixpkgs-unstable, headplane, ... }@inputs:
-    let
-      system = "aarch64-linux";
-      # system = "x86_64-linux";
-      # system = "aarch64-darwin" ## APPLE SILICON
-      # system = "x86_64-darwin"  ## APPLE INTEL
-      pkgs = import nixpkgs {
-        inherit system;
-        config = {
-          allowUnfree = true;
+  outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs:
+  let
+    hosts = [
+      #"melchior"
+       "shinji"
+      # "asuka"
+      # "rei"
+    ];
+
+    mkHost = hostName:
+      let
+        custom = import ./hosts/${hostName}/custom.nix;
+        system = custom.system;
+
+        pkgs-unstable = import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
         };
-      };
+      in
+      {
+        name = hostName;
 
-      # Unstable pkgs
-      pkgs-unstable = import nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
+        value = nixpkgs.lib.nixosSystem {
+          inherit system;
 
-    in
-    {
-      nixosConfigurations = {
-        shinji = nixpkgs.lib.nixosSystem {
-          inherit system pkgs;
+          specialArgs = {
+            inherit inputs custom hostName pkgs-unstable;
+          };
 
           modules = [
-            ((import ./hosts/default/configuration.nix) { inherit pkgs-unstable; })
-            ((import ./modules) { inherit pkgs-unstable; })
+            ./hosts/${hostName}/configuration.nix
+            ./hosts/common/base.nix
+
+            # Only keep this if ./modules/default.nix exists
+            ./modules
           ];
         };
       };
-    };
+
+  in {
+    nixosConfigurations =
+      builtins.listToAttrs (map mkHost hosts);
+  };
 }
