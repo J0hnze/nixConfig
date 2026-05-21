@@ -9,12 +9,14 @@ environment.systemPackages = with pkgs; [
     android-tools
     altair
     awscli
+    bat
     bloodhound
     bluez 
     bluez-tools 
     chromedriver 
     chromium
     chrony
+    cloudlens
     dalfox
     dbeaver-bin
     dig
@@ -36,6 +38,7 @@ environment.systemPackages = with pkgs; [
     jq
     imhex
     kitty
+    k9s
     libgcc
     libimobiledevice
     libxslt
