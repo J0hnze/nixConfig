@@ -3,10 +3,12 @@
   lib,
   config,
   pkgs,
+  custom,
   ...
 }:
 {
-  environment.systemPackages = with pkgs-unstable; [
+  environment.systemPackages =
+    (with pkgs-unstable; [
     #android-studio  -- doesnt work with aarch64-linux
     bruno
     (burpsuite.override { proEdition = true; })
@@ -21,5 +23,6 @@
     shuffledns
     subfinder
     vscode
-  ];
+  ])
+    ++ (custom.extraUnstableSystemPackages or [ ]);
 }

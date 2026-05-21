@@ -1,6 +1,8 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, custom, ... }:
 
-{
+let
+  username = custom.username or null;
+in {
   # ------------------------------------------------------------
   # Enable Docker
   # ------------------------------------------------------------
@@ -9,8 +11,10 @@
     enableOnBoot = true;
   };
 
-  # Optional: allow your user to run docker without sudo
-  users.users.johnze.extraGroups = [ "docker" ];
+  # Allow the configured user to run docker without sudo
+  users.users = lib.mkIf (username != null) {
+    ${username}.extraGroups = [ "docker" ];
+  };
 
   # ------------------------------------------------------------
   # Nessus Container
@@ -34,7 +38,7 @@
       ];
 
       # Auto start via systemd
-      autoStart = false;
+      autoStart = true;
     };
   };
 } 

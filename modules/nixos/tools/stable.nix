@@ -2,11 +2,13 @@
   lib,
   config,
   pkgs,
+  custom,
   ...
 }:
 
 {
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages =
+    (with pkgs; [
     awscli
     # B
     bat
@@ -103,6 +105,7 @@
     veracrypt
     vscode-extensions.ms-dotnettools.csdevkit
     vscode-extensions.ms-dotnettools.vscode-dotnet-runtime
+
     # W
     wafw00f
     wget
@@ -132,6 +135,7 @@
     python312Packages.urllib3
     python312Packages.wcwidth
         
-  ];
+  ])
+    ++ (custom.extraSystemPackages or [ ]);
 
 }
