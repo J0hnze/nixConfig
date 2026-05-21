@@ -31,7 +31,7 @@
     in
     {
       nixosConfigurations = {
-        shinji = nixpkgs.lib.nixosSystem {
+        ramiel = nixpkgs.lib.nixosSystem {
           inherit system pkgs;
 
           modules = [
