@@ -37,6 +37,8 @@
     }@inputs:
     let
       system = "x86_64-linux";
+      # system = "aarch64-darwin" ## APPLE SILICON
+      # system = "x86_64-darwin"  ## APPLE INTEL
       pkgs = import nixpkgs {
         inherit system;
         config = {
@@ -53,7 +55,7 @@
     in
     {
       nixosConfigurations = {
-        voidsent = nixpkgs.lib.nixosSystem {
+        voidsent = nixpkgs.lib.nixosSystem { ## left side of the equals here is config name
           # # Pentesting
           inherit system pkgs;
           modules = [

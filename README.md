@@ -2,6 +2,24 @@
 
 This is my attempt at creating a replicatable build for testing that has _hopefully_ everything you need to go from live CD to up and running in less than an hour - current testing is _around_ 25 mins :)
 
+
+## Getting Started From Fresh Install
+Open the base configuration
+```bash
+sudo nano /etc/nixos/configuration.nix
+```
+
+Add the following packages into the `environment.systemPackages = with pkgs; []` config section
+
+- git
+- vscode
+
+Once these are added run `sudo nixos-rebuild switch` to install git and vscode!
+Next - clone the repo and CD into the nixConig directory
+
+Then follow the steps below to apply the config
+
+
 ## Applying The Config
 
 
@@ -13,11 +31,11 @@ sudo cat /etc/nixos/hardware-configuration.nix > ./hosts/default/hardware-config
 
 This will overwrite the existing hardware configuration (nix needs the file to be tracked by git so ... this is what you do)
 
-Make the relevant changes in the `modules/nixos/tester.nix` for your user on lines 10 and 20 
+Make the relevant changes in the `modules/nixos/tester.nix` for your user on lines 15 and 25 
 
-Edit the lines 18 and 37 in your `configuration.nix` ( in the current folder ) to reflect your hostname 
+Edit the lines 23,45 and 101 in your `configuration.nix` ( in the current folder ) to reflect your hostname 
 
-Edit the `flake.nix` and change `nixosConfigurations.voidsent` to the name of the hostname `nixosConfigurations.<hostnane>`
+Edit the `flake.nix` and change `voidsent = nixpkgs.lib.nixosSystem` to the name of the config (in this case we're using  hostname) `<hostname> = nixpkgs.lib.nixosSystem` (line 58)
 
 Once that's done, run the following to apply the configuration to the device where `<hostname>` is the name that you added to the flake.nix
 
