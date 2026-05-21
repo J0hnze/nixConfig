@@ -20,7 +20,7 @@
 
   tester = {
     enable = true;
-    userName = "phyu";
+    userName = "johnze";
   };
 
   # Bootloader.
@@ -98,7 +98,7 @@
       ports = [ 22 ];
       settings = {
         PasswordAuthentication = false;
-        AllowUsers = [ "phyu" ];
+        AllowUsers = [ "johnze" ];
         UseDns = true;
         X11Forwarding = false;
         PermitRootLogin = "prohibit-password";
@@ -172,13 +172,6 @@
 
   # List services that you want to enable:
 
-  home-manager = {
-    # specialArgs = {inherit inputs;};
-    users = {
-      "phyu" = import ./home.nix;
-    };
-  };
-
   # Enable VMware Tools
 
   virtualisation = {
@@ -193,5 +186,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
-  # programs.hyprland.enable = true;
 }
