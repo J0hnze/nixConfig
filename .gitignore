@@ -1,1 +1,2 @@
-pkgs/nessus/*.deb
+flake.locktmp/
+tmp/

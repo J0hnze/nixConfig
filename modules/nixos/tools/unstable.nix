@@ -9,7 +9,8 @@
   environment.systemPackages = with pkgs-unstable; [
     #android-studio  -- doesnt work with aarch64-linux
     bruno
-    (burpsuite.override { proEdition = false; })
+    (burpsuite.override { proEdition = true; })
+    httpx
     jsubfinder
     massdns
     netexec
