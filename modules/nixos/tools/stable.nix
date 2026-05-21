@@ -49,7 +49,7 @@
     go
     gowitness
     # H
-    hoppscotch
+    # hoppscotch # doesnt work on m1
     hyprland
     # I
     imhex

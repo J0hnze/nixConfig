@@ -43,12 +43,7 @@
   ];
 
   networking = {
-<<<<<<< HEAD
-    hostName = "melchior"; # Define your hostname.
-=======
     hostName = "ramiel"; # Define your hostname.
->>>>>>> 2813a72 (add m1 config)
-    # wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
     # Configure network proxy if necessary
     # proxy.default = "http://user:password@proxy:port/";
@@ -135,7 +130,8 @@
       # Enable the X11 windowing system.
       # You can disable this if you're only using the Wayland session.
       enable = true;
-      videoDrivers = ["vmware"];
+      # videoDrivers = ["vmware"];
+      videoDrivers = ["fbdev"];
       # Enable touchpad support (enabled default in most desktopManager).
       displayManager.lightdm.enable = true;
       desktopManager.cinnamon.enable = true;
@@ -157,7 +153,6 @@
     nix-ld.enable = true;
   };
     
-    my.nessus.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -176,16 +171,6 @@
 
   # List services that you want to enable:
 
-<<<<<<< HEAD
-=======
-  #home-manager = {
-  #  # specialArgs = {inherit inputs;};
-  #  users = {
-  #    "phyu" = import ./home.nix;
-  #  };
-  #};
-
->>>>>>> 2813a72 (add m1 config)
   # Enable VMware Tools
 
   virtualisation = {
