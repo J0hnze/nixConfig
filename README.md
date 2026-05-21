@@ -41,7 +41,8 @@ Once that's done, run the following to apply the configuration to the device whe
 
 ## Nessus 
 
-to install nessus sun the fetch nessus script first to get the files `scripts/fetch-nessus.sh`. they arent stored in the repo as they are too big
+if the docker file doesnt pull use the following command
+'sudo docker pull tenable/nessus:latest-ubuntu'
 
 
 ```bash

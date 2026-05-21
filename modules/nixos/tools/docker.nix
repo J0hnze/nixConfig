@@ -34,7 +34,7 @@
       ];
 
       # Auto start via systemd
-      autoStart = true;
+      autoStart = false;
     };
   };
 } 

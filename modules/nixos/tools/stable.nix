@@ -8,14 +8,14 @@
 {
   environment.systemPackages = with pkgs; [
     # A
-    altair
-    android-tools
-    apktool
-    apksigner
+    # android-tools -- doesnt work on aarch64
+    # apktool
+    # apksigner
+    # altair
     awscli
     # B
     bat
-    bloodhound
+    # bloodhound
     bluez
     bluez-tools
     # C
@@ -49,7 +49,7 @@
     go
     gowitness
     # H
-    hoppscotch
+    # hoppscotch # doesnt work on m1
     hyprland
     # I
     imhex
@@ -92,7 +92,6 @@
     sameboy
     scrcpy
     spice-vdagent
-    sslscan
     # T
     terraform
     tmux
@@ -106,8 +105,8 @@
     wget
     whois
     wifite2
-    winetricks
-    wineWowPackages.stable
+    # winetricks
+    # wineWowPackages.stable
     # U
     uv
     # Z
