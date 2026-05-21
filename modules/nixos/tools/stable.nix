@@ -92,7 +92,7 @@
     sameboy
     scrcpy
     spice-vdagent
-    
+    sslscan
     # T
     terraform
     tmux
