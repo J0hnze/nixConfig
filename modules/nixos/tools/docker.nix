@@ -4,7 +4,7 @@ let
   username = custom.username or null;
 in {
   imports = [
-    ../../../docker-images/nessus.nix
+    ./docker-images/nessus.nix
   ];
 
   # ------------------------------------------------------------
