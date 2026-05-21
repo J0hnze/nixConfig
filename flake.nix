@@ -9,9 +9,25 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    pxe-server = {
+      url = "git+file:///home/leigh-admin/Projects/pxe-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    headplane = {
+      url = "github:tale/headplane/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs: 
+  outputs = { 
+    self, 
+    nixpkgs, 
+    nixpkgs-unstable, 
+    pxe-server,
+    headplane,
+    ... 
+    }@inputs: 
   let 
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -29,16 +45,16 @@
     };
   in
   {
-    nixosConfigurations.voidsent= nixpkgs.lib.nixosSystem {
-      # specialArgs = {inherit inputs;};
-      inherit system pkgs;
-      modules = [
-        ((import ./hosts/default/configuration.nix ){ inherit pkgs-unstable;})
-        ((import ./modules) { inherit pkgs-unstable;})
-        
-             
-        inputs.home-manager.nixosModules.default
-      ];
+    nixosConfigurations = {
+      voidsent= nixpkgs.lib.nixosSystem { ## Pentesting
+        inherit system pkgs;
+        modules = [
+          ((import ./hosts/default/configuration.nix ){ inherit pkgs-unstable;})
+          ((import ./modules) { inherit pkgs-unstable;})
+          inputs.home-manager.nixosModules.default
+          ];
+      };
+
     };
   };
 }
