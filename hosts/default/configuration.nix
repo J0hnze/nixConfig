@@ -122,7 +122,7 @@ services ={
         variant = "";
       };
 
-    }
+    };
 
     qemuGuest.enable = true;
     spice-vdagentd.enable = true;
