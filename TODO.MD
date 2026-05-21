@@ -1,1 +1,2 @@
-- [ ] Fix shared folders 
+- [ ] Fix shared folders
+- [ ] Fix `hosts/melchior/shared-folders.nix.nix` (rename to `.nix`, correct args, wire into flake/host imports)
