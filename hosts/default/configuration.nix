@@ -3,18 +3,18 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, inputs,  ... }:
-let unstable-pkgs = import <nixos-unstable> { config = { allowUnfree = true; }; };
-in
+#let unstable-pkgs = import nixos-unstable { config = { allowUnfree = true; }; };
+#in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.default
+      # inputs.home-manager.nixosModules.default
     ];
 
   tester ={
     enable = true;
-    userName = "Phyu";
+    userName = "phyu";
   };
 
   # Bootloader.
@@ -33,7 +33,7 @@ in
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking = {
-    hostName = "Voidsent"; # Define your hostname.
+    hostName = "voidsent"; # Define your hostname.
   # wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -217,7 +217,7 @@ environment.systemPackages = with pkgs; [
     zsh
 
 #python
-    unstable-pkgs.python313
+    python313
     python313Packages.pipx
     python313Packages.pandas    
     python313Packages.pip
@@ -227,13 +227,13 @@ environment.systemPackages = with pkgs; [
 #    python3Packages = pkgs.python312Packages;
 
 #unstable
-    unstable-pkgs.bruno
-    (unstable-pkgs.burpsuite.override { proEdition = true; })    
-    unstable-pkgs.android-studio
-    unstable-pkgs.nuclei
-    unstable-pkgs.platformio
-    unstable-pkgs.postman
-    unstable-pkgs.netexec
+    # unstable-pkgs.bruno
+    # (unstable-pkgs.burpsuite.override { proEdition = true; })    
+    # unstable-pkgs.android-studio
+    # unstable-pkgs.nuclei
+    # unstable-pkgs.platformio
+    # unstable-pkgs.postman
+    # unstable-pkgs.netexec
   ];
 #  programs.hyprland = {
 #   enable = true;
@@ -255,7 +255,7 @@ environment.systemPackages = with pkgs; [
   # List services that you want to enable:
 
 home-manager = {
-	specialArgs = {inherit inputs;};
+	# specialArgs = {inherit inputs;};
 	users = {
 		"phyu" = import ./home.nix;
 	};

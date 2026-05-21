@@ -1,5 +1,5 @@
 {lib,config,pkgs, ...}:
-let unstable-pkgs = import <nixos-unstable> { config = { allowUnfree = true; }; };
+#let unstable-pkgs = import <nixos-unstable> { config = { allowUnfree = true; }; };
 
 environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
@@ -73,7 +73,7 @@ environment.systemPackages = with pkgs; [
     zsh
 
 #python
-    unstable-pkgs.python313
+    python313
     python313Packages.pipx
     python313Packages.pandas    
     python313Packages.pip
@@ -82,12 +82,12 @@ environment.systemPackages = with pkgs; [
     python313Packages.wcwidth
 #    python3Packages = pkgs.python312Packages;
 
-#unstable
-    unstable-pkgs.bruno
-    (unstable-pkgs.burpsuite.override { proEdition = true; })    
-    unstable-pkgs.android-studio
-    unstable-pkgs.nuclei
-    unstable-pkgs.platformio
-    unstable-pkgs.postman
-    unstable-pkgs.netexec
+# #unstable
+#     unstable-pkgs.bruno
+#     (unstable-pkgs.burpsuite.override { proEdition = true; })    
+#     unstable-pkgs.android-studio
+#     unstable-pkgs.nuclei
+#     unstable-pkgs.platformio
+#     unstable-pkgs.postman
+#     unstable-pkgs.netexec
   ];
