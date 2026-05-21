@@ -37,7 +37,7 @@
     # F
     ffuf
     flameshot
-
+    fastfetch
     # G
     gcc
     gdb
@@ -101,13 +101,14 @@
     zsh
 
     # python
+    python312
+    python312Packages.pipx
+    python312Packages.pandas
+    python312Packages.pip
+    python312Packages.numpy
+    python312Packages.requests
+    python312Packages.wcwidth
 
-    python313Packages.pipx
-    python313Packages.pandas
-    python313Packages.pip
-    python313Packages.numpy
-    python313Packages.requests
-    python313Packages.wcwidth
 
   ];
 }
