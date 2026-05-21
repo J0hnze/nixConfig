@@ -9,13 +9,19 @@
   environment.systemPackages = with pkgs; [
     # A
     altair
+<<<<<<< HEAD
     android-tools
     apktool
     apksigner
+=======
+    # android-tools -- doesnt work on aarch64
+    # apktool
+    # apksigner
+>>>>>>> 2813a72 (add m1 config)
     awscli
     # B
     bat
-    bloodhound
+    # bloodhound
     bluez
     bluez-tools
     # C
@@ -92,7 +98,6 @@
     sameboy
     scrcpy
     spice-vdagent
-    sslscan
     # T
     terraform
     tmux
@@ -106,8 +111,8 @@
     wget
     whois
     wifite2
-    winetricks
-    wineWowPackages.stable
+    # winetricks
+    # wineWowPackages.stable
     # U
     uv
     # Z
