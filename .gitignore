@@ -1,3 +1,4 @@
 tmp/
 scripts/__pycache__
 TODO.MD
+modules/nixos/scripts/pdf2xss/venv/*

@@ -10,6 +10,7 @@
   environment.systemPackages =
     (with pkgs; [
     awscli
+    amass
     # B
     bat
     # bloodhound
@@ -59,6 +60,7 @@
     jq
     # K
     k9s
+    katana
     kitty
     kubectl
     kubescape
@@ -96,6 +98,7 @@
     scrcpy
     spice-vdagent
     sslscan
+    sqlmap
     # T
     terraform
     tmux
@@ -105,7 +108,6 @@
     veracrypt
     vscode-extensions.ms-dotnettools.csdevkit
     vscode-extensions.ms-dotnettools.vscode-dotnet-runtime
-
     # W
     wafw00f
     wget
@@ -115,6 +117,7 @@
     # winetricks
     # wineWowPackages.stable
     # U
+    unzip
     uv
     # Z
     zsh
@@ -125,8 +128,8 @@
     python312
     python312Packages.beautifulsoup4
     python312Packages.dirsearch
-    python312Packages.fpdf
-    python312Packages.numpy
+    #python312Packages.dnsgen
+    python312Packages.dnspython
     python312Packages.pipx
     python312Packages.pandas
     python312Packages.pip
@@ -134,6 +137,7 @@
     python312Packages.tldextract
     python312Packages.urllib3
     python312Packages.wcwidth
+    python3Packages.fpdf2
         
   ])
     ++ (custom.extraSystemPackages or [ ]);

