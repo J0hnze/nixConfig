@@ -114,8 +114,6 @@
     wget
     whois
     wifite2
-    wormhole
-    wormhole-ng
     wpscan
     # winetricks
     # wineWowPackages.stable
