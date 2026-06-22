@@ -71,6 +71,7 @@
     libreoffice-qt6-fresh
     # M
     metasploit
+    magic-wormhole
     magic-wormhole-rs
     # N
     neo4j
@@ -113,6 +114,8 @@
     wget
     whois
     wifite2
+    wormhole
+    wormhole-ng
     wpscan
     # winetricks
     # wineWowPackages.stable
